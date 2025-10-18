@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { CardCustomer } from "../components/card";
+import { CardCustomer } from "./components/card";
 
 
 export default async function Customer() {
@@ -22,11 +22,11 @@ export default async function Customer() {
                     </Link>
                 </div>
 
-                
+
                 <section className="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <CardCustomer/>
-                    <CardCustomer/>
-                    <CardCustomer/>
+                    <CardCustomer />
+                    <CardCustomer />
+                    <CardCustomer />
                 </section>
 
             </main>
