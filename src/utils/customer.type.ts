@@ -1,5 +1,5 @@
 export interface CustomerProps {
-   id: string;
+    id: string;
     name: string;
     phone: string;
     email: string;
