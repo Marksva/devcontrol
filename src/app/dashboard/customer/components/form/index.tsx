@@ -37,7 +37,8 @@ export function NewCustomerForm({ userId }: { userId: string }) {
             address: data.address,
             userId: userId
         })
-
+        
+        router.refresh();
         router.replace("/dashboard/customer");
 
     }
