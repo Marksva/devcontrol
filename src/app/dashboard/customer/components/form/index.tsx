@@ -41,7 +41,7 @@ export function NewCustomerForm({ userId }: { userId: string }) {
             address: data.address,
             userId: userId
         })
-        
+
         router.refresh();
         router.replace("/dashboard/customer");
 
@@ -95,7 +95,7 @@ export function NewCustomerForm({ userId }: { userId: string }) {
 
             <button
                 type="submit"
-                className="bg-blue-500 my-4 px-2 h-11 rounded text-white font-bold"
+                className="bg-blue-500 my-4 px-2 h-11 rounded text-white font-bold cursor-pointer"
                 disabled={loading}
             >
                 {loading ? (<div className='w-full flex items-center justify-center'><FiLoader size={26} className="animate-spin" /></div>) : "Cadastrar Cliente"}
