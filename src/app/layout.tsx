@@ -3,16 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "../components/header"
 import { AuthProvider } from "@/providers/auth";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { ModalProvider } from "@/providers/modal";
 
 export const metadata: Metadata = {
   title: "devcontrol - Seu sistema de gerenciamento",
@@ -26,10 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
+      <body >
         <AuthProvider>
-          <Header />
-          {children}
+          <ModalProvider>
+            <Header />
+            {children}
+
+          </ModalProvider>
         </AuthProvider>
       </body>
     </html>
