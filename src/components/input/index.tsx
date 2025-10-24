@@ -14,7 +14,7 @@ export function Input({ name, placeholder, type, register, rules, error }: Input
     return (
         <>
             <input
-                className="w-full border-2 border-gray-200 rounded-md h-11 px-2"
+                className="w-full border-2 border-gray-100 rounded-md h-11 px-2"
                 placeholder={placeholder}
                 type={type}
                 {...register(name, rules)}
