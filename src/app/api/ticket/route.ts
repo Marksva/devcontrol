@@ -20,7 +20,7 @@ export async function PATCH(request: Request) {
     })
 
     if (!findTicket) {
-        return NextResponse.json({ message: "Filed update ticket" }, { status: 404 });
+        return NextResponse.json({ message: "failed update ticket" }, { status: 404 });
     }
 
     try {
@@ -33,11 +33,38 @@ export async function PATCH(request: Request) {
             }
         });
     } catch (error) {
-        return NextResponse.json({ message: "Filed update ticket" }, { status: 500 });
+        return NextResponse.json({ message: "failed update ticket" }, { status: 500 });
     }
 
 
     console.log(findTicket);
     return NextResponse.json({ message: "ticket found", ticket: findTicket }, { status: 200 });
 
+}
+
+export async function POST(request: Request) {
+
+    const { customerId, name, description } = await request.json();
+
+    if (!customerId || !name || !description) {
+        return NextResponse.json({ message: "failed create ticket" }, { status: 400 });
+    }
+
+
+    try {
+        await prismaClient.ticket.create({
+            data: {
+                name,
+                description,
+                customerId,
+                status: "Open"
+            }
+        })
+    } catch (error) {
+        return NextResponse.json({ message: "failed create ticket" }, { status: 400 });
+    }
+
+    console.log({ customerId, name, description });
+
+    return NextResponse.json({ message: "ticket created" }, { status: 201 });
 }

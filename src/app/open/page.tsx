@@ -8,6 +8,7 @@ import { use, useState } from "react"
 
 import { FiSearch, FiX } from "react-icons/fi"
 import { FormTicket } from "@/app/open/components/FormTicket"
+import { api } from "@/lib/api"
 
 const schema = z.object({
     email: z.string().email("Digite o email do cliente para localizar").min(1, "O email deve ter no mínimo 5 caracteres"),
@@ -15,18 +16,15 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-interface CustomerDataInfo {
+export interface CustomerDataInfo {
     id: string;
     name: string;
 }
 export default function OpenTicket() {
 
-    const [customer, setCustomer] = useState<CustomerDataInfo | null>({
-        id: "1",
-        name: "Cliente de Teste"
-    })
+    const [customer, setCustomer] = useState<CustomerDataInfo | null>(null)
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
+    const { register, handleSubmit, setValue, setError, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema)
     })
 
@@ -36,6 +34,25 @@ export default function OpenTicket() {
         setValue("email", "")
     }
 
+
+    async function handleSearchCustomer(data: FormData) {
+        const response = await api.get("/api/customer", {
+            params: {
+                email: data.email
+            }
+        })
+
+        if (response.data == null) {
+            setError("email", { message: "Cliente não encontrado" })
+            return;
+        }
+
+        setCustomer({
+            id: response.data.id,
+            name: response.data.name
+        })
+
+    }
 
     return (
         <div className="w-full max-w-2xl mx-auto px-2">
@@ -54,7 +71,9 @@ export default function OpenTicket() {
 
                     </div>
                 ) : (
-                    <form className="bg-slate-200 py-6 px-2 rounded border-2 border-gray-200">
+                    <form
+                        className="bg-slate-200 py-6 px-2 rounded border-2 border-gray-200"
+                        onSubmit={handleSubmit(handleSearchCustomer)}>
                         <div className="flex flex-col gap-3">
                             <Input
                                 name="email"
@@ -73,7 +92,7 @@ export default function OpenTicket() {
                     </form>
                 )}
 
-               {customer !== null && <FormTicket />}
+                {customer !== null && <FormTicket customer={customer} />}
 
 
             </main>
