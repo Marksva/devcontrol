@@ -18,9 +18,9 @@ export function TicketItem({ customer, ticket }: TicketItemProps) {
     const router = useRouter();
     const { handleModalVisible, setDetailTicket } = useContext(ModalContext);
 
-    function handleChangeStatus() {
+    async function handleChangeStatus() {
         try {
-            const response = api.patch('/api/ticket', {
+            const response = await api.patch('/api/ticket', {
                 id: ticket.id
             });
 
